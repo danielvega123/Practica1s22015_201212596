@@ -15,8 +15,8 @@ public class Practica1s22015_201212596 {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
-        System.out.println("Hola mundo");
+        PantPrincipal_201212596 pant = new PantPrincipal_201212596();
+       pant.show();
     }
     
 }
