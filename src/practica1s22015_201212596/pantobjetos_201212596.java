@@ -5,8 +5,14 @@
  */
 package practica1s22015_201212596;
 
+import practica1s22015_201212596.clases.Nodoobjetos_201212596;
+import practica1s22015_201212596.clases.Lista_objetos_201212596;
+import java.io.File;
 import java.net.URL;
 import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+
 
 /**
  *
@@ -14,6 +20,12 @@ import javax.swing.ImageIcon;
  */
 public class pantobjetos_201212596 extends javax.swing.JFrame {
 int indice = 0;
+int tamaño = 1;
+String ruta;
+
+Lista_objetos_201212596 personajes = new Lista_objetos_201212596();
+Nodoobjetos_201212596 nodo;
+       
     /**
      * Creates new form pantobjetos_201212596
      */
@@ -26,62 +38,29 @@ int indice = 0;
     }
     
     public void cargarimagenes(){
-    switch(indice) {
-            case 0:
-                String path = "/practica1s22015_201212596/mario.png";
-                URL url = this.getClass().getResource(path);
-                ImageIcon icon = new ImageIcon(url);
-                lblimagen.setIcon(icon);
-                break;
-            case 1:
-                String path1 = "/practica1s22015_201212596/koopitas.png";
-                URL url1 = this.getClass().getResource(path1);
-                ImageIcon icon1 = new ImageIcon(url1);
-                lblimagen.setIcon(icon1);
-                break;
-             case 2:
-                String path2 = "/practica1s22015_201212596/goomba.png";
-                URL url2 = this.getClass().getResource(path2);
-                ImageIcon icon2 = new ImageIcon(url2);
-                lblimagen.setIcon(icon2);
-                break;
-            default:
+           try {
+            JFileChooser abrir = new JFileChooser();
+            abrir.setFileSelectionMode(JFileChooser.FILES_ONLY);
 
-                break;
-        }
+            int seleccion = abrir.showOpenDialog(this);
 
-    
-    
-    
-    }
-    
-    public void insertarnodo(){
-        Nodo_201212596 cabeza = new Nodo_201212596();
-        Nodo_201212596 nuevo = new Nodo_201212596();
-        Nodo_201212596 aux = new Nodo_201212596();
-        
-        aux = cabeza;
-        nuevo.setNombre(txtnombrepersonaje.getText());
-        nuevo.setImagen(lblimagen.getIcon());
-        
-        
-         if (cabeza == null) {   // preguntamos si cabeza es null si lo es eso significa que la lista esta vacia 
-            cabeza = nuevo; // asignamos cabeza como nuevo
-            cabeza.sig = null; // indicamos que el siguiente de cabeza es null
+            if (seleccion == JFileChooser.APPROVE_OPTION) {
+                File f = abrir.getSelectedFile();
+                try {
+                    lblimagen.setText("");
+                    String path = f.getAbsolutePath();
+                    //String path = lblmario.get
+                    ruta=path;
+                    ImageIcon icon = new ImageIcon(path);
+                    lblimagen.setIcon(icon);
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(rootPane,"Error adentro de segundo try");
+                }
+            }
 
-        } 
-         else {  
-            do {
-                if (aux.sig == null) { // pregunto si ya llego al final de lista
-                    aux.sig = nuevo;   // le asigno el siguiente del nodo aux a nuevo
-                    nuevo.sig = null;  // indicamos que el siguiente de nuevo es nulo
-          } 
-           aux= aux.sig;  // decimos que aux va ser igual a el siguiente de el mismo.
-        }while(aux!=null);   // el while se va repetir mientras aux no sea igual a nulo
-    }
-        
-       
-    }
+        } catch (Exception e) {JOptionPane.showMessageDialog(rootPane,"Error al abrir archivo");
+        }     
+           }
        
 
     /**
@@ -93,25 +72,25 @@ int indice = 0;
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        btnizquierda = new javax.swing.JButton();
-        btnderecha = new javax.swing.JButton();
         txtnombrepersonaje = new javax.swing.JTextField();
-        btnagregar = new javax.swing.JButton();
         lblimagen = new javax.swing.JLabel();
+        btnagregar = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        rbtnpila = new javax.swing.JRadioButton();
+        rbtncola = new javax.swing.JRadioButton();
+        btnterminar = new javax.swing.JButton();
+        btnbowser = new javax.swing.JButton();
+        btnmario = new javax.swing.JButton();
+        btnkoopita = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
+        jButton5 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        btnizquierda.setText("Izquierda");
-        btnizquierda.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnizquierdaActionPerformed(evt);
-            }
-        });
-
-        btnderecha.setText("Derecha");
-        btnderecha.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnderechaActionPerformed(evt);
+        lblimagen.setText("Imagen");
+        lblimagen.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblimagenMouseClicked(evt);
             }
         });
 
@@ -122,78 +101,132 @@ int indice = 0;
             }
         });
 
+        jLabel1.setText("Nombre de Objeto");
+
+        rbtnpila.setText("Pila");
+
+        rbtncola.setText("Cola");
+
+        btnterminar.setText("Terminar");
+        btnterminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnterminarActionPerformed(evt);
+            }
+        });
+
+        btnbowser.setIcon(new javax.swing.ImageIcon(getClass().getResource("/practica1s22015_201212596/imagenes/bowser.png"))); // NOI18N
+
+        btnmario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/practica1s22015_201212596/imagenes/mario.png"))); // NOI18N
+
+        btnkoopita.setIcon(new javax.swing.ImageIcon(getClass().getResource("/practica1s22015_201212596/imagenes/koopitas.png"))); // NOI18N
+
+        jButton4.setText("jButton4");
+
+        jButton5.setText("jButton5");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(btnizquierda)
-                .addGap(38, 38, 38)
-                .addComponent(lblimagen, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
-                .addComponent(btnderecha))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(txtnombrepersonaje)
-                    .addComponent(btnagregar, javax.swing.GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE))
-                .addGap(94, 94, 94))
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblimagen, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnbowser))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txtnombrepersonaje, javax.swing.GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE)
+                            .addComponent(btnagregar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(rbtnpila)
+                            .addComponent(rbtncola, javax.swing.GroupLayout.Alignment.TRAILING)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnterminar)
+                            .addComponent(jLabel1))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(btnmario)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnkoopita)))
+                .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addGap(63, 63, 63)
+                .addComponent(jButton4)
+                .addGap(30, 30, 30)
+                .addComponent(jButton5)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(21, 21, 21)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btnizquierda)
-                            .addComponent(btnderecha)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(lblimagen, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(rbtnpila)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(rbtncola))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(jLabel1)
+                            .addGap(6, 6, 6)
+                            .addComponent(txtnombrepersonaje, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(btnagregar))
+                        .addComponent(lblimagen, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
-                .addComponent(txtnombrepersonaje, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(11, 11, 11)
-                .addComponent(btnagregar)
-                .addContainerGap(17, Short.MAX_VALUE))
+                .addComponent(btnterminar)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnbowser)
+                    .addComponent(btnmario)
+                    .addComponent(btnkoopita))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton4)
+                    .addComponent(jButton5))
+                .addContainerGap(61, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnderechaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnderechaActionPerformed
-       
-        if(indice == 2){
-           indice = 0;        
-              System.out.println(indice);
-           cargarimagenes();
-           }  
-       else{
-           indice = indice + 1;   
-           System.out.println(indice);
-           cargarimagenes();
-              
-           }  
-    }//GEN-LAST:event_btnderechaActionPerformed
-
     private void btnagregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnagregarActionPerformed
-     
+        int correlativo = 0;   
+        try
+        {
+            Nodoobjetos_201212596 aux = personajes.ultimo;
+            personajes.insertarnodo(ruta, txtnombrepersonaje.getText(),correlativo);
+            JOptionPane.showMessageDialog(rootPane, "Se agrego un nuevo dato a la Lista de Objetos");
+           /** Form_editar_planta Fep=new Form_editar_planta();
+            Fep.setVisible(true);
+            Fep.plantas(Plantas, Ljugador);**/
+            correlativo += 1;
+            
+                    
+         }catch(Exception e)
+        {
+            JOptionPane.showMessageDialog(rootPane, "Error al insertar un nuevo dato");
+        }
+           personajes.Imprimir();
+       
     }//GEN-LAST:event_btnagregarActionPerformed
 
-    private void btnizquierdaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnizquierdaActionPerformed
-      
-        if(indice == 0){
-           indice = 2;  
-           System.out.println(indice);
-            cargarimagenes();
-           }  
-       else{
-           indice = indice - 1;  
-           System.out.println(indice);
-            cargarimagenes();
-           }  
-       
-    }//GEN-LAST:event_btnizquierdaActionPerformed
+    private void lblimagenMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblimagenMouseClicked
+        cargarimagenes();
+        lblimagen.repaint();
+        this.repaint();
+    }//GEN-LAST:event_lblimagenMouseClicked
+
+    private void btnterminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnterminarActionPerformed
+        // TODO add your handling code here:
+        pantallacrearjuego_201212596 pant = new pantallacrearjuego_201212596();
+        pant.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnterminarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -232,9 +265,16 @@ int indice = 0;
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnagregar;
-    private javax.swing.JButton btnderecha;
-    private javax.swing.JButton btnizquierda;
+    private javax.swing.JButton btnbowser;
+    private javax.swing.JButton btnkoopita;
+    private javax.swing.JButton btnmario;
+    private javax.swing.JButton btnterminar;
+    private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel lblimagen;
+    private javax.swing.JRadioButton rbtncola;
+    private javax.swing.JRadioButton rbtnpila;
     private javax.swing.JTextField txtnombrepersonaje;
     // End of variables declaration//GEN-END:variables
 }
